@@ -9,11 +9,22 @@ auth.onAuthStateChanged(user => {
             console.log(data);
             setupComments(data);
         });
+        setupUI(user);
     }
     else {
-        isLoggedOut();
+        setupComments();
+        setupUI();
     }
 })
+
+// create new comment
+const createForm = document.querySelector('#create-form');
+createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    db.push(createForm.comment.value);
+    createForm.reset();
+});
+
 
 
 // signup 
