@@ -20,11 +20,17 @@ auth.onAuthStateChanged(user => {
 // create new comment
 const createForm = document.querySelector('#create-form');
 createForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    db.push(createForm.comment.value);
-    createForm.reset();
+    e.preventDefault(); // {title : createForm['title'].value, content : createForm['content'].value}
+    var title = createForm['title'].value;
+    var content = createForm['content'].value;
+    
+    db.child(title).set(content).then(() => {
+        console.log('comment added');
+        const modal = document.querySelector('#modal-create');
+        M.Modal.getInstance(modal).close();
+        createForm.reset();
+    });
 });
-
 
 
 // signup 
@@ -68,4 +74,5 @@ loginForm.addEventListener('submit', (e) => {
         loginForm.reset();
     });
 });
+
 
